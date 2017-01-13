@@ -1,0 +1,32 @@
+#
+# LDAP SCHEMA for 'Nextcloud'
+#
+# From https://docs.nextcloud.com/server/11/admin_manual/configuration_user/user_auth_ldap.html
+#
+# Quota Field:
+# Nextcloud can read an LDAP attribute and set the user quota according to its value. 
+# Specify the attribute here, otherwise keep it empty. The attribute shall return 
+# human readable values, e.g. "2 GB".
+# Example: NextcloudQuota
+#
+# SOURCE:
+# https://github.com/kunago/nextcloud-ldap-schema
+#
+# objectidentifier Nextcloud 1.3.6.1.4.1.49213
+# objectidentifier NextcloudLDAP 1.3.6.1.4.1.49213.1
+# objectidentifier NextcloudLDAPAttributeType 1.3.6.1.4.1.49213.1.1
+# objectidentifier NextcloudLDAPObjectClass 1.3.6.1.4.1.49213.1.2
+
+attributetype ( 1.3.6.1.4.1.49213.1.1.1
+    NAME 'NextcloudQuota'
+    DESC 'User Quota (e.g. 15 GB)'
+    EQUALITY caseExactMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX '1.3.6.1.4.1.1466.115.121.1.15'
+    SINGLE-VALUE )
+
+objectclass ( 1.3.6.1.4.1.49213.1.2.1
+    NAME 'Nextcloud'
+    DESC 'Nextcloud LDAP Schema'
+    AUXILIARY
+    MAY ( NextcloudQuota ) )
